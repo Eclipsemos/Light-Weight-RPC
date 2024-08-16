@@ -77,7 +77,7 @@ public class Client {
         socket.close();
     }
 
-    //Sending Objects
+    //Sending Objects using ObjectOutputStream
     public static void runWithObject() throws IOException {
         Socket socket = new Socket(hostName, info_port);
         System.out.println("Connected to server at " + hostName + ":" + info_port);

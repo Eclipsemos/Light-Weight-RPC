@@ -67,7 +67,9 @@ public class Server {
             serverSocket.close();
         }
     }
+    
 
+    // Mocking half-package problem
     public static void runWithHalfPackage() throws IOException {
         ServerSocket serverSocket = new ServerSocket(info_port);
         System.out.println("Server is listening on port " + info_port);
