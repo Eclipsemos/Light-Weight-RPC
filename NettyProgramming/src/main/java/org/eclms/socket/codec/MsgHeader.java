@@ -10,7 +10,7 @@ public class MsgHeader implements Serializable {
     private long requestId; // request id
     private int serializationLen; // len of serialization
 
-    private byte[] serialization; // content of serialzation
+    private byte[] serialization; // content of serialization
     private int msgLen;
     public short getMagic() {
         return magic;
