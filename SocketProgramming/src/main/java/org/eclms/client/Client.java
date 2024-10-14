@@ -70,7 +70,7 @@ public class Client {
         OutputStream outToServer = socket.getOutputStream();
         PrintWriter out = new PrintWriter(outToServer, true);
 
-        // 发送一个长消息，模拟半包问题
+        // Issue : Half-package
         String longMessage = "This is a very long message that will be split into two parts to simulate a half package issue.";
         out.println(longMessage);
 

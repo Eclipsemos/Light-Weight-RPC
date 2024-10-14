@@ -27,6 +27,7 @@ public class Server {
     public void run() throws Exception {
         EventLoopGroup boosGroup = new NioEventLoopGroup();
         EventLoopGroup workerGroup = new NioEventLoopGroup();
+        System.out.println("HERE");
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(boosGroup, workerGroup)
@@ -36,6 +37,7 @@ public class Server {
                         public void initChannel(SocketChannel ch) throws Exception {
                             ch.pipeline().addLast(new RpcEncoder());
                             ch.pipeline().addLast(new RpcDecoder());
+                            ch.pipeline().addLast(new SimpleChatServerHandler());
                             //TO DO
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)

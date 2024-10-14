@@ -19,13 +19,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Client {
-
-    //Create Logger for Client class using Factory mode
     private Logger logger = LoggerFactory.getLogger(Client.class);
 
     private final String host;
-    private final Integer port;
 
+    private final Integer port;
 
     private final Bootstrap bootstrap;
     private final EventLoopGroup eventLoopGroup;
@@ -35,9 +33,9 @@ public class Client {
     public Client(String host, Integer port) throws InterruptedException {
         this.host = host;
         this.port = port;
+
         bootstrap = new Bootstrap();
         eventLoopGroup = new NioEventLoopGroup(4);
-
         bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class)
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .handler(new ChannelInitializer<SocketChannel>() {
@@ -48,22 +46,23 @@ public class Client {
                                 .addLast(new RpcDecoder());
                     }
                 });
-        channelFuture = bootstrap.connect(host, port).sync();
+        channelFuture = bootstrap.connect(host,port).sync();
     }
-
-    public void sendRequest(Object o) {
+    public void sendRequest(Object o){
         channelFuture.channel().writeAndFlush(o);
     }
+
 
     public static void main(String[] args) throws Exception {
         final Client nettyClient = new Client("127.0.0.1",8081);
         final RpcProtocol rpcProtocol = new RpcProtocol();
-
+        // 构建消息头
         MsgHeader header = new MsgHeader();
         long requestId = 123;
         header.setMagic(ProtocolConstants.MAGIC);
         header.setVersion(ProtocolConstants.VERSION);
         header.setRequestId(requestId);
+
 
         final byte[] serialization = RpcSerialization.JSON.name.getBytes();
         header.setSerializationLen(serialization.length);
